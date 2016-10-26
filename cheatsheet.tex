@@ -1,0 +1,88 @@
+\documentclass[a4wide, 10pt]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage[colorlinks,linkcolor=black,citecolor=blue,urlcolor=black]{hyperref}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{listings}
+\usepackage{palatino}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{amssymb}
+
+%\setenumerate{noitemsep}
+%\setlist{noitemsep}
+
+\title{}
+\author{}
+\date{\today}
+
+\begin{document}
+
+\begin{itemize}
+	\item Continuous pdf: \\
+	$f_X(x) : \mathcal{X} \rightarrow [0,\infty)$, $f_X(x) = \lim_{\epsilon \to 0} \frac{1}{\epsilon} \cdot \Pr[x \leq X \leq x + \epsilon]$
+
+	\item Continuous cdf: \\
+	$F_x(x) := \Pr[X \leq x]$ where $\Pr[a \leq X \leq b] = \int_a^b f_x(x) \, \mathrm{d} x$
+
+	\item Uniform distribution on $\mathcal{X} = [u,v]$: \\
+	$f_X(x) = 1/(v - u)$ for $x \in \mathcal{X}$
+
+	\item Normal distribution: \\
+	$f_X(x) = (2\pi)^{-1/2} \exp(-x^2/2)$
+
+	\item Dirac delta property: \\
+	$\int_{-\infty}^\infty \mathrm{d} x \, b(x)\delta(x-a) = b(a)$
+
+	\item Expectation value of $g(X)$ where $X \in \mathcal{X}$: \\
+	$\mathbb{E}[g(X)] = \sum_{x \in \mathcal{X}} \Pr[X = x] g(x)$
+	, k'th moment of $X$= $\mathbb{E}[X^k]$
+
+	\item Statistical distance of $X, Y \in \mathcal{X}$: \\
+	$\Delta(X,Y) = \frac{1}{2} \sum_{x \in \mathcal{X}} |\mathbb{P}(x) - \mathbb{Q}(x)|$
+
+	\item Covariance matrix $K$: \\
+	$K_{i,j} = \mathbb{E}[X_i X_j] - \mathbb{E}[X_i] \cdot \mathbb{E}[X_j]$\\
+	Zero covariance ($K_{1,2} = K_{2,1} = 0$) does not imply $X_1$ and $X_2$ are independent.
+
+	\item Marginal distribution for $X$ when $(X,Y) \sim \mathbb{P}$: \\
+	$\Pr[X = x] = \sum_y \mathbb{P}(x,y)$
+
+	\item Conditional probability for $(X,Y) \sim \mathbb{P}$: \\
+	$\Pr[X = x|Y = y] = \frac{\Pr[X = x, Y = y]}{\Pr[Y = y]} = \frac{\mathbb{P}(x,y)}{\mathbb{P}_2(y)}$
+
+	\item (Shannon) Entropy rules:
+		\begin{enumerate}
+			\item \textbf{Additivity}: inf of a set of indep. RVs must be the sum of indiv. inf. contents 
+			\item \textbf{Sub-additivity}: Total inf. content of two jointly distrib. RVs cannot exceed sum of seperate infs.
+			\item \textbf{Expansibility}: Adding extra outcome of prob. 0 does not affect inf.
+			\item \textbf{Normalization}: The distrib $(1/2,1/2)$ has inf. of 1 bit.
+			\item The distrib $(p, 1-p)$ for $p \to 0$ has zero inf.
+		\end{enumerate}
+
+	\item Shannon entropy:\\
+	$H(X) = \sum_{x \in \mathcal{X}} p_x \log_2 \frac{1}{p_x}$
+
+	\item Binary entropy function: 2 outcomes with prob. $p$ and $1-p$: \\
+	$h(p) = p \log \frac{1}{p} + (1 - p) \log \frac{1}{1-p}$
+
+	\item Differential entropy for continuous RV $X \sim \rho$:\\
+	$h_{\text{diff}}(X) = - \int \mathrm{d}x\, \rho(x) \log \rho(x) = \mathbb{E}_x \log \frac{1}{\rho(x)}$
+
+	\item Relative entropy (Kullback-Leibler distance): \\
+	$D(\mathbb{P}||\mathbb{Q}) = \sum_{x \in \mathcal{X}} \mathbb{P}(x) \log \frac{\mathbb{P}(x)}{\mathbb{Q}(x)}$
+
+	\item Entropy of jointly distrib. RVs: $H(X,Y)$ or $H(XY)$: \\
+	$H(X,Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{xy} \log \frac{1}{p_{xy}}$
+
+	\item Conditional entropy:
+	
+
+
+\end{itemize}
+
+\end{document}
