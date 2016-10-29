@@ -1,24 +1,15 @@
 \documentclass[twocolumn,9pt]{extarticle}
-
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
-\usepackage[colorlinks,linkcolor=black,citecolor=blue,urlcolor=black]{hyperref}
-\usepackage{graphicx}
-\usepackage[colorinlistoftodos]{todonotes}
 \usepackage{listings}
 \usepackage{palatino}
 \usepackage[margin=0.5cm]{geometry}
 \usepackage{enumitem}
-\usepackage{float}
 \usepackage{amssymb}
 
 %\setenumerate{noitemsep}
 %\setlist{noitemsep}
-
-\title{}
-\author{}
-\date{\today}
 
 \begin{document}
 
@@ -84,30 +75,51 @@
 	$H(X|Y) = H(X,Y) - H(Y)$
 	
 	\item Mutual information: \\
-	$\mathbf{I}(X;Y) = H(X) - H(X|Y)$\\
-	$\mathbf{I}(X;Y) = H(Y) - H(Y|X)$\\
+	$\mathbf{I}(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)$\\
 	$\mathbf{I}(X;Y) = H(X,Y) - H(X|Y) - H(Y|X)$\\
 	$\mathbf{I}(X;Y) = H(X) + H(Y) - H(X,Y)$\\
+	$\mathbf{I}(X;Y|Z) = \mathbb{E}_z \mathbf{I}(X|Z=z ; Y|Z = z)$
 
-	\item Min entropy:
+	\item Min entropy: \\
+	$H_{\text{min}}(X) = -\log \max\limits_{x \in \mathcal{X}} p_x = -\log p_{\text{max}}$\\
+	$H_{\text{min}}(X|Y) = -\log \mathbb{E}_y \max\limits_{x \in \mathcal{X}} p_{x|y}$
 
-	\item Error correcting codes:
+	\item Linear binary codes: \\
+	Maps $k$-bit msg $x$ to $n$-bit ($n > k$) codeword $c_x \in \mathcal{C}$. Perceived string $z = c_z \oplus e$. Minimum distance of code: $d = \min_{c,c'\in\mathcal{C}} \text{HammingWeight}(c \oplus c')$. Receiver determines which $c_{\hat{x}}$ is closest to $z$ and decodes it into $\hat{x}$. Error correcting capability $t = \lfloor\frac{d-1}{2}\rfloor$.
 
-	\item Generator / parity check matrix:
+	\item Generator ($G$ is $k \times n$) and parity check ($H$ is $(n-k) \times n$) matrix: \\
+	$c_x = xG$. $G = (\mathbf{1}_k|A)$. $H = (-A^T|\mathbf{1}_{n-k})$. $GH^T= 0$, $cH^t=0$.\\
+	All $k$ rows of $G$ are linearly independent.
 
-	\item Syndrome decoding:
+	\item Syndrome decoding ($s(z) \in \{0,1\}^{n-k}$):\\
+	$s(z) = zH^T = (c_x + e)H^T = eH^T$\\
+	Syndrome depends only on the error pattern, not on the message.
 
-	\item Hamming bound:
+	\item Hamming bound: Binary code of length $n$ that can correct $t$ errors:
+	$2^k \leq 2^n / \sum_{j=0}^t \binom nj$. Approx $\log n$ bits of redundancy per bit error.
 
-	\item Channel capacity:
+	\item Channel capacity:\\
+	Inf. content error free: $k \leq \mathbf{I}(C;Z)$\\
+	BSC capacity (per bit): $\frac{k}{n} \leq \mathbf{I}(C_j;Z_j) = H(Z_j) - H(Z_j|C_j)$ \\
+	This is called the BSC code rate: $\textsc{BSC code rate} \leq 1 - h(\epsilon)$ \\
+	Following the rule of thumb: $h(\epsilon) = -\epsilon \log \epsilon + \mathcal{O}(\epsilon)$
 
-	\item von Neumann alg:
+	\item Uniformly random bits from continuous source:\\
+	TODO
 
-	\item Piling-up lemma:
+	\item The von Neumann alg: \\
+	Given $(b_1, b_2)$, if $b_1 = b_2$ then no output, else output $b_1$.
 
-	\item Resilient function:
+	\item Piling-up lemma: \\
+	Let $X_1, ..., X_n \in \{0,1\}$ be independent with biases $\Pr[X_i=1]-\Pr[X_i=0]=\alpha_i$. Construct $Y = X_1 \oplus X_2 \oplus ... \oplus X_n$. The bias of $Y$ is $\Pr[Y=1]-\Pr[Y=0] = (-1)^{n-1} \prod_{i=1}^n \alpha_i$. Thus by xoring many bits together the bias gets reduced.
 
-	\item Strong extractor:
+	\item Resilient function:\\
+	A function $\Psi : \{0,1\}^n \rightarrow \{0,1\}^m$ is $(n,m,t)$-resilient of, for any $t$ coords $i_1,...,i_t \in [n]$, any $a_1,...,a_t \in \{0,1\}$ and any $y \in \{0,1\}^m$ it holds that: $\Pr[\Psi(X)=y|x_{i_1}=a_1,...,x_{i_t}=a_t] = 2^{-m}$\\
+	i.e.: Knowledge of $t$ values of the input does not give inf. that would help in guessing the output. ECC example ($[n,k,d]$ code): $\Psi : \{0,1\}^n \rightarrow \{0,1\}^k$. $\Psi = xG^T$. Then $\Psi$ is an $(n,k,d-1)$-resilient fun.
+
+	\item Strong extractor $\text{Ext} : \{0,1\}^n \times \{0,1\}^* \rightarrow \{0,1\}^l$:\\
+	Takes $n$-bit string $X$ and randomness $R$ and outputs an $l$-bit string $(l < n)$. $Z = \text{Ext}(X,R)$. Ext is a strong extractor for source min-entropy $m$, output length $l$ and nonuniformity $\epsilon$ if for all distrib of $X$ with $H_\infty(X) \geq m$ it holds that $\Delta(ZR;U_lR) \leq \epsilon$.
+
 
 	\item Universal hash functions:
 
