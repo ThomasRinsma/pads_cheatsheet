@@ -111,8 +111,8 @@
 	This is called the BSC code rate: $\textsc{BSC code rate} \leq 1 - h(\epsilon)$ \\
 	Following the rule of thumb: $h(\epsilon) = -\epsilon \log \epsilon + \mathcal{O}(\epsilon)$
 
-	\item \textbf{Uniformly random bits from continuous source:} \\
-	TODO
+	%\item \textbf{Uniformly random bits from continuous source:} \\
+	%TODO
 
 	\item \textbf{Randomness sources: } \\
 	Ring oscilators (odd number of inverters causes jitter in period, gaussian), noisy resistors (no voltage applied, noise amplitude gaussian distribution), radioactive decay (poisson)
@@ -130,14 +130,14 @@
 	\item \textbf{Strong extractor $\text{Ext} : \{0,1\}^n \times \{0,1\}^* \rightarrow \{0,1\}^l$:} \\
 	Takes $n$-bit string $X$ and randomness $R$ and outputs an $l$-bit string $(l < n)$. $Z = \text{Ext}(X,R)$. Ext is a strong extractor for source min-entropy $m$, output length $l$ and nonuniformity $\epsilon$ if for all distrib of $X$ with $H_\infty(X) \geq m$ it holds that $\Delta(ZR;U_lR) \leq \epsilon$. $U_l$ is an RV uniform on $\{0,1\}^l$. Also true: $\mathbb{E}_r\Delta(Z|R=r;U_l)\leq\epsilon$
 
-	\item \textbf{Extractable randomness:}\\
-	TODO
+	%\item \textbf{Extractable randomness:}\\
+	%TODO
 
 	\item \textbf{Universal hash functions:} \\
 	Let $\mathcal{R}$, $\mathcal{X}$ and $\mathcal{T}$ be finite sets. Let $\{\Phi_r\}_{r \in \mathcal{R}}$ be a family of hash functions from $\mathcal{X}$ to $\mathcal{T}$. The family is called universal iff, for $R$ drawn uniformly from $\mathcal{R}$, it holds that: $\Pr[\Phi_R(x) = \Phi_R(x')] \leq 1/|\mathcal{T}|$. It's called $\eta$-almost universal if it holds that: $\Pr[\Phi_R(x) = \Phi_R(x')] \leq \eta$ (for all $x, x' \in \mathcal{X}$ with $x \neq x'$).
 
 	\item \textbf{Leftover hash lemma: } \\
-	TODO
+	Let $X \in \mathcal{X}$ be a RV. Let $\delta \geq 0$ be a constant. Let $F : \mathcal{X} \times \mathcal{R} \rightarrow \{0,1\}^l$ be a $w^{-l}(1+\delta)$-almost universal family of hash functions, with seed $R \in \mathcal{R}$. Then: $\Delta(F(X,R)R;U_lR) \leq \frac{1}{2}\sqrt{\delta + 2^{l-H_2(X)}}$
 
 	\item \textbf{Noisy broadcast channel and no return channel: } \\
 	Secret capacity $C_s$ of the broadcast channel $P_{Y\,Z|X}$ can be bounded:\\
@@ -148,7 +148,7 @@
 	$\hat{C}_s(\epsilon,\delta) = h(\epsilon * \delta) - h(\epsilon)$.
 
 	\item \textbf{Satellite scenario: } \\
-	TODO
+	Alice and Bob agree on an ECC $\mathcal{C}$ with cw of length $N$. Alice chooses a random msg $R$, encodes it to $V^N$ and sends $V^N \oplus X^N$ to Bob over the noiseless pub channel (NPC). Bob computes $W^N = (V^N \oplus X^N) \oplus Y^N$. He accepts only if $W^N$ has much closer Hamming dist to some cw in $\mathcal{C}$ then the error correcting cap. of the code. He tells Alice over the NPC if he accepts or not. Noiseless for A en B but noisy for Eve: her noise is indep. so she has to guess at $X^N$ and hence at $R$.
 
 	\item \textbf{PUF types and their properties: } \\
 	General properties:
@@ -203,8 +203,8 @@
 	\item \textbf{Zero leakage FE (for continuous RV) based on partitions } \\
 	$\Pr[S=s|W=w] = 1/n$. Enroll: determine which partition the meassured val $x$ is located in: $\mathcal{A}_{ij}$. Set $s_x = i$, $w_x = j$. Reconstruct: $X'$ is meassured, determine for which $s'$ the interval $\mathcal{A}_{s',w_x}$ is closest to $x'$. This $s'$ is the reconstructed key. $H_\infty(S|W=w) = H_\infty(S|W) = \log n$.
 
-	\item \textbf{Helper data schemes for specific PUF types: } \\
-	TODO
+	%\item \textbf{Helper data schemes for specific PUF types: } \\
+	%TODO
 
 	\item \textbf{Distance bounding principles (and fraud types): } \\
 	\textbf{Mafia fraud}: challenge is relayed to different location where a legit. device is tricked into giving a response, response is relayed back to verifier.
