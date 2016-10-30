@@ -161,7 +161,7 @@
 	Types:
 	\begin{itemize}
 		\item \textbf{Coating PUF}: random layor of conductors and insulators: probes result in binary string. Used for secure key storage.
-		\item \textbf{Optical PUF}: 3D optical structure produces speckle pattern. Challenge: props of laser beam: angle of incidence, focal dist.
+		\item \textbf{Optical PUF}: 3D optical structure produces speckle pattern. Challenge: props of laser beam: angle of incidence, focal dist. ($cs \approx 10^7$)
 		\item \textbf{Silicon PUF}: variations in IC from manufacturing. Challenge: pulsed time signal to certain part. Response: delay times of various wires and logic devices.
 		\item \textbf{SRAM PUF}: Undefined state of RAM cells. Challenge: memory address, response: returned start-up values.
 		\item \textbf{Randomly positioned glass fibers}: Challenge: ordinary beam of light lighting up part of the layer. Response: Certain fibers light up.
@@ -192,7 +192,7 @@
 	\end{itemize}
 
 	\item \textbf{When to use FE and SS: } \\
-	FE: reliably extract a cryptographic key from noisy data. SS: reliably extract a string with sufficient (min-)entropy. Easier to construct SS than FE, in general: SS extracts more (min-)entropy than a FE from the same source.
+	FE: reliably extract a cryptographic key from noisy data. SS: reliably extract a string with sufficient (min-)entropy. Easier to construct SS than FE, in general: SS extracts more (min-)entropy than a FE from the same source. Privacy of x: use SS, uniform secret: FE.
 
 	\item \textbf{Code offset method (COM):} \\
 	Enroll (Gen): $s \in \{0,1\}^k$, $c_s = Enc(s)$. $w = c_S \oplus x$. Output $s$ as secret and $w$ as helper data.
@@ -224,13 +224,14 @@
 	The Hermitian conjugate of $\ket{\psi}$ is $\bra{\psi}$.
 
 	\item \textbf{Quantum stuff:} \\
+	$\ket{0} = (1,0)^T$, $\ket{1} = (0,1)^T$. 
 	\textbf{Meassurement destroys state information.}\\
 	Time evolution of a quantum system can be represented as a unitary operator acting on a starting space. A unitary op $U$ is defined as: $UU^\dagger = \mathbf{1}$ and $U^\dagger U = \mathbf{1}$. Norm of a vec is preserved: For $\ket{\psi'} = U\ket{\psi}$, then the norm is $\braket{\psi'|\psi'} = \braket{\psi|U^\dagger U|\psi} = \braket{\psi|\psi}$.
 
 	Tensor product:
 	$\begin{pmatrix}\alpha \\ \beta\end{pmatrix} \otimes \begin{pmatrix}\gamma \\ \delta\end{pmatrix} = \begin{pmatrix}\alpha\gamma \\ \alpha\beta \\ \beta\gamma \\ \beta\delta\end{pmatrix}$.
 
-	For qubits, tensor is omitted: $\ket{0} \otimes \ket{1} = \ket{01}$
+	For qubits, tensor is omitted: $\ket{0} \otimes \ket{1} = \ket{01}$. Polariz. state of photon: $\ket{\beta} = \cos \beta \ket{\leftrightarrow} + \sin \beta \ket{\updownarrow}$. Prob to pass through: $(\cos \beta)^2$
 
 	\item \textbf{No cloning theorem: } \\
 	Let $\mathcal{H}_1$ and $\mathcal{H}_2$ be two Hilbert spaces. let $\ket{\psi} \in \mathcal{H}_1$ and $\ket{e} \in \mathcal{H}_2$, where $e$ is known and $\psi$ is unknown. Then there does not exist a unitary operator $U_e$ acting on $\mathcal{H}_1 \otimes \mathcal{H}_2$ satisfying $U_e\ket{\psi} \otimes \ket{e} = \ket{\psi} \otimes \ket{\psi}$ for all $\psi$
