@@ -7,6 +7,7 @@
 \usepackage[margin=0.5cm]{geometry}
 \usepackage{enumitem}
 \usepackage{amssymb}
+\usepackage{braket}
 
 %\setenumerate{noitemsep}
 %\setlist{noitemsep}
@@ -14,6 +15,7 @@
 \begin{document}
 
 \begin{itemize}
+	\setlength\itemsep{0.05cm}
 	\item \textbf{Continuous pdf: } \\
 	$f_X(x) : \mathcal{X} \rightarrow [0,\infty)$, $f_X(x) = \lim_{\epsilon \to 0} \frac{1}{\epsilon} \cdot \Pr[x \leq X \leq x + \epsilon]$
 
@@ -61,7 +63,7 @@
 	$H(X,Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{xy} \log_2 \frac{1}{p_{xy}}$
 
 	\item \textbf{Renyi entropy:} \\
-	TODO!
+	$H_\alpha(X) = \frac{-1}{\alpha - 1} \log \sum_{x \in \mathcal{X}} p^\alpha_x$
 
 	\item \textbf{Binary entropy function: 2 outcomes with prob. $p$ and $1-p$: } \\
 	$h(p) = p \log \frac{1}{p} + (1 - p) \log \frac{1}{1-p}$
@@ -199,23 +201,48 @@
 	% TODO: syndrome-only COM?
 
 	\item \textbf{Zero leakage FE (for continuous RV) based on partitions } \\
-	$\Pr[S=s|W=w] = 1/n$. Enroll: determine which partition the meassured val $x$ is located in: $\mathcal{A}_{ij}$. Set $s_x = i$, $w_x = j$. Reconstruct: $X'$ is meassured, determine for which $s'$ the interval $\mathcal{A}_{s',w_x}$ is closest to $x'$. This $s'$ is the reconstructed key. $H_\infty(S|W=w) = \log n$. $H_\infty(S|W) = \log n$.
+	$\Pr[S=s|W=w] = 1/n$. Enroll: determine which partition the meassured val $x$ is located in: $\mathcal{A}_{ij}$. Set $s_x = i$, $w_x = j$. Reconstruct: $X'$ is meassured, determine for which $s'$ the interval $\mathcal{A}_{s',w_x}$ is closest to $x'$. This $s'$ is the reconstructed key. $H_\infty(S|W=w) = H_\infty(S|W) = \log n$.
 
 	\item \textbf{Helper data schemes for specific PUF types: } \\
 	TODO
 
 	\item \textbf{Distance bounding principles (and fraud types): } \\
 	\textbf{Mafia fraud}: challenge is relayed to different location where a legit. device is tricked into giving a response, response is relayed back to verifier.
-	\textbf{Terrorist fraud}: legit. device cooperates with attacker, however auth secrets are not shared with the attacker.\\
-	(Light travels about 300m every $\mu s$). If a device repeatedly correctly respons to an \emph{unpredictable} challenge within time $\Delta t$, then the location where the response is computed cannot be further away than $x = c \Delta t/2$.
+	\textbf{Terrorist fraud}: legit. device cooperates with attacker, does not have to follow protocol, can share everything except long-term auth secrets.\\
+	(Light travels about 300m every $\mu s$). If a device repeatedly correctly respons to an \emph{unpredictable} challenge within time $\Delta t$, then the location where the response is computed cannot be further away than $x = c \Delta t/2$. Max time for resp. to arrive: $t_{\text{max}} = 2 \frac{x_{\text{max}}}{c} + t_{\text{slack}}$. 
+
 	\item \textbf{Brands-chaum protocol: } \\
-
+	commit, rapid bit phase, sign phase. No link between phases, mafia not possible (timing meassured), terrorist is possible.
 	\item \textbf{Swiss knife protocol } \\
+	Rapid phase uses $R0_i=Z0_j$ and $R1_i=Z1_j$ to determine response $r_i$. $Z1 = Z0 \oplus x$ so attacker cannot perform rapid phase without knowledge of the key. Therefore terrorist and mafia are not possible. \textbf{Analog impl.} Similar to swiss knife but with LP and HP filters.
 
-	\item \textbf{Analog impl.: } \\
+	%TODO: more about analog SK??
 
-	\item \textbf{Quantum stuff: } \\
+	\item \textbf{Linear algebra:} \\
+	Complex conjugate of $a+bi$ is $a-bi$. conjugate of $\rho e^{i \phi}$ is $\rho e^{-i \phi}$. Hermitian conjugate of a complex number is its complex conjugate: $a^\dagger = a^*$.
+	On a matrix: Hermitian conjugate is transpose followed by complex conjugate.
+	The Hermitian conjugate of $\ket{\psi}$ is $\bra{\psi}$.
 
+	\item \textbf{Quantum stuff:} \\
+	\textbf{Meassurement destroys state information.}\\
+	Time evolution of a quantum system can be represented as a unitary operator acting on a starting space. A unitary op $U$ is defined as: $UU^\dagger = \mathbf{1}$ and $U^\dagger U = \mathbf{1}$. Norm of a vec is preserved: For $\ket{\psi'} = U\ket{\psi}$, then the norm is $\braket{\psi'|\psi'} = \braket{\psi|U^\dagger U|\psi} = \braket{\psi|\psi}$.
+
+	Tensor product:
+	$\begin{pmatrix}\alpha \\ \beta\end{pmatrix} \otimes \begin{pmatrix}\gamma \\ \delta\end{pmatrix} = \begin{pmatrix}\alpha\gamma \\ \alpha\beta \\ \beta\gamma \\ \beta\delta\end{pmatrix}$.
+
+	For qubits, tensor is omitted: $\ket{0} \otimes \ket{1} = \ket{01}$
+
+	\item \textbf{No cloning theorem: } \\
+	Let $\mathcal{H}_1$ and $\mathcal{H}_2$ be two Hilbert spaces. let $\ket{\psi} \in \mathcal{H}_1$ and $\ket{e} \in \mathcal{H}_2$, where $e$ is known and $\psi$ is unknown. Then there does not exist a unitary operator $U_e$ acting on $\mathcal{H}_1 \otimes \mathcal{H}_2$ satisfying $U_e\ket{\psi} \otimes \ket{e} = \ket{\psi} \otimes \ket{\psi}$ for all $\psi$
+
+
+	\item \textbf{Quantum readout of PUFs:} \\
+	One round of the protocol:
+	\begin{enumerate}
+		\item The verifyer choses a random challenge $\psi$. He prepares a particle in state $\ket{\psi}$ and sends the particle to the prover.
+		\item The prover lets the particle interact with the PUF. This results in a state $\ket{\omega} =  R\ket{\psi}$. He sends the particle back to the verifyer.
+		\item The verifier does a meassurement $\ket{\omega}\bra{\omega}$ on the particle. If the outcome is 1 then the prover has passed this round.
+	\end{enumerate}
 
 \end{itemize}
 
