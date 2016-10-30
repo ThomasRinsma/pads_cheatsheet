@@ -46,7 +46,7 @@
 	\item \textbf{Conditional probability for $(X,Y) \sim \mathbb{P}$: } \\
 	$\Pr[X = x|Y = y] = \frac{\Pr[X = x, Y = y]}{\Pr[Y = y]} = \frac{\mathbb{P}(x,y)}{\mathbb{P}_2(y)}$
 
-	\item (Shannon) Entropy rules:
+	\item \textbf{(Shannon) Entropy rules:}
 		\begin{enumerate}
 			\item \textbf{Additivity}: inf of a set of indep. RVs must be the sum of indiv. inf. contents 
 			\item \textbf{Sub-additivity}: Total inf. content of two jointly distrib. RVs cannot exceed sum of seperate infs.
@@ -56,7 +56,12 @@
 		\end{enumerate}
 
 	\item \textbf{Shannon entropy:} \\
-	$H(X) = \sum_{x \in \mathcal{X}} p_x \log_2 \frac{1}{p_x}$
+	Lower bound on the avg length of the shortest desc of $X$.\\
+	$H(X) = \sum_{x \in \mathcal{X}} p_x \log_2 \frac{1}{p_x}$\\
+	$H(X,Y) = \sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p_{xy} \log_2 \frac{1}{p_{xy}}$
+
+	\item \textbf{Renyi entropy:} \\
+	TODO!
 
 	\item \textbf{Binary entropy function: 2 outcomes with prob. $p$ and $1-p$: } \\
 	$h(p) = p \log \frac{1}{p} + (1 - p) \log \frac{1}{1-p}$
@@ -107,6 +112,9 @@
 	\item \textbf{Uniformly random bits from continuous source:} \\
 	TODO
 
+	\item \textbf{Randomness sources: } \\
+	Ring oscilators (odd number of inverters causes jitter in period, gaussian), noisy resistors (no voltage applied, noise amplitude gaussian distribution), radioactive decay (poisson)
+
 	\item \textbf{The von Neumann alg: } \\
 	Given $(b_1, b_2)$, if $b_1 = b_2$ then no output, else output $b_1$.
 
@@ -120,38 +128,93 @@
 	\item \textbf{Strong extractor $\text{Ext} : \{0,1\}^n \times \{0,1\}^* \rightarrow \{0,1\}^l$:} \\
 	Takes $n$-bit string $X$ and randomness $R$ and outputs an $l$-bit string $(l < n)$. $Z = \text{Ext}(X,R)$. Ext is a strong extractor for source min-entropy $m$, output length $l$ and nonuniformity $\epsilon$ if for all distrib of $X$ with $H_\infty(X) \geq m$ it holds that $\Delta(ZR;U_lR) \leq \epsilon$. $U_l$ is an RV uniform on $\{0,1\}^l$. Also true: $\mathbb{E}_r\Delta(Z|R=r;U_l)\leq\epsilon$
 
+	\item \textbf{Extractable randomness:}\\
+	TODO
 
-	\item Universal hash functions:
+	\item \textbf{Universal hash functions:} \\
+	Let $\mathcal{R}$, $\mathcal{X}$ and $\mathcal{T}$ be finite sets. Let $\{\Phi_r\}_{r \in \mathcal{R}}$ be a family of hash functions from $\mathcal{X}$ to $\mathcal{T}$. The family is called universal iff, for $R$ drawn uniformly from $\mathcal{R}$, it holds that: $\Pr[\Phi_R(x) = \Phi_R(x')] \leq 1/|\mathcal{T}|$. It's called $\eta$-almost universal if it holds that: $\Pr[\Phi_R(x) = \Phi_R(x')] \leq \eta$ (for all $x, x' \in \mathcal{X}$ with $x \neq x'$).
 
-	\item Leftover hash lemma:
+	\item \textbf{Leftover hash lemma: } \\
+	TODO
 
-	\item Binary symmetric channel:
+	\item \textbf{Noisy broadcast channel and no return channel: } \\
+	Secret capacity $C_s$ of the broadcast channel $P_{Y\,Z|X}$ can be bounded:\\
+	$C_s(P_{Y\,Z|X}) \geq \max_{P_X}[\mathbf{I}(X;Y) - \mathbf{I}(X;Z)] = \max_{P_X}[H(X|Z) - H(X|Y)]$. Condition: if Eve's reception quality is better than Bob's ($\mathbf{I}(X;Y) < \mathbf{I}(X;Z)$) then the secrecy capacity is zero. Secrecy capacity of BSC with error rates $\epsilon$ and $\delta$ is: $h(\delta) - h(\epsilon)$ if $\delta > \epsilon$, and $0$ otherwise.
 
-	\item Secret capacity:
+	\item \textbf{Noisy broadcast channel plus public return channel:} \\
+	$\hat{C}_s(P_{Y\,Z|X}) \leq \min\{\max_{P_X}\mathbf{I}(X;Y), \max_{P_X}\mathbf{I}(X;Y|Z)\}$\\
+	$\hat{C}_s(\epsilon,\delta) = h(\epsilon * \delta) - h(\epsilon)$.
 
-	\item PUF types and their properties:
+	\item \textbf{Satellite scenario: } \\
+	TODO
 
-	\item PUF applications + attack models:
+	\item \textbf{PUF types and their properties: } \\
+	General properties:
+	\begin{itemize}
+		\item The object can be subjected to a large number of diff challenges that yield an unpredictable response
+		\item The object is very hard to clone physically
+		\item Mathematical modeling of the challenge-response physics is very difficult
+		\item Opaqueness: It is hard to characterize the physical structure of the object in a non-destructive way.
+	\end{itemize}
+	Types:
+	\begin{itemize}
+		\item \textbf{Coating PUF}: random layor of conductors and insulators: probes result in binary string. Used for secure key storage.
+		\item \textbf{Optical PUF}: 3D optical structure produces speckle pattern. Challenge: props of laser beam: angle of incidence, focal dist.
+		\item \textbf{Silicon PUF}: variations in IC from manufacturing. Challenge: pulsed time signal to certain part. Response: delay times of various wires and logic devices.
+		\item \textbf{SRAM PUF}: Undefined state of RAM cells. Challenge: memory address, response: returned start-up values.
+		\item \textbf{Randomly positioned glass fibers}: Challenge: ordinary beam of light lighting up part of the layer. Response: Certain fibers light up.
+	\end{itemize}
+	Uncontrolled PUF: reader interacts directly with PUF structure, trusted reader. Controlled PUF (CPUF): interaction through a \emph{control layer}, PUF and \emph{cl} are bound together, seperation will damage the PUF. Result: attacker has no direct access to PUF. Example: secure key storage where control layer performs zk-protocol to prove knowledge of the key (called \emph{Physically Obscured Key (POK)}).
 
-	\item PUF entropy and inf. stuff:
+	\item \textbf{PUF math:} \\
+	Information revealed by a noisy meassurement outcome $U'$ where $m \in \mathcal{M} (m(K) = U)$: $\mathbf{I}(U';K) = \mathbf{I}(U';U)$. Noiseless case: $\mathbf{I}_m$\\
 
-	\item Fuzzy extractor definition:
+	Meassurable entropy of PUF (space $\mathcal{K}$ and $\mathcal{M}$):\\
+	$\mathbf{I}^\text{meas}_{\mathbb{P}\mathcal{M}} = \max_{m\in\mathcal{M}} H(m(k))$\\
 
-	\item When to use FE and SS:
+	Security param of bare PUF: min num of C-R meassurements required to reveal all measurable info of the PUF: $S_{\mathbb{P}\mathcal{M}_0}$
 
-	\item Zero leakage scheme stuff:
+	\item \textbf{Fuzzy extractor: } \\
+	Gen and Rep algorithms. $(S_x,W_x) = Gen(X)$. $S'_x = Rep(X', W_x)$
+	Must satisfy the following properties:
+	\begin{itemize}
+		\item \textbf{Correctness}: The prob that $S'_x = S_x$ must be close to 1.
+		\item \textbf{Security}: The RV $S_x$ must be close to uniform, given knowledge of $W_x$.
+	\end{itemize}
 
-	\item Helper data scheme:
+	\item \textbf{Secure Sketch} (for discrete src space $\mathcal{X}$):\\
+	$SS: x \mapsto w_x$, $Rec: (x', w_x) \mapsto \hat{x}$ with:
+	\begin{itemize}
+		\item \textbf{Correctness}: The prob that $\hat{X} = X$ must be close to 1.
+		\item \textbf{Security}: $X$ given $W_X$ must have high entropy.
+	\end{itemize}
 
-	\item Distance bounding principles (and fraud types):
+	\item \textbf{When to use FE and SS: } \\
+	FE: reliably extract a cryptographic key from noisy data. SS: reliably extract a string with sufficient (min-)entropy. Easier to construct SS than FE, in general: SS extracts more (min-)entropy than a FE from the same source.
 
-	\item Brands-chaum protocol:
+	\item \textbf{Code offset method (COM):} \\
+	Enroll (Gen): $s \in \{0,1\}^k$, $c_s = Enc(s)$. $w = c_S \oplus x$. Output $s$ as secret and $w$ as helper data.
+	Reconstruct (Rep): $\hat{s} = Dec(x' \oplus w)$.
 
-	\item Swiss knife protocol
+	% TODO: syndrome-only COM?
 
-	\item Analog impl.:
+	\item \textbf{Zero leakage FE (for continuous RV) based on partitions } \\
+	$\Pr[S=s|W=w] = 1/n$. Enroll: determine which partition the meassured val $x$ is located in: $\mathcal{A}_{ij}$. Set $s_x = i$, $w_x = j$. Reconstruct: $X'$ is meassured, determine for which $s'$ the interval $\mathcal{A}_{s',w_x}$ is closest to $x'$. This $s'$ is the reconstructed key. $H_\infty(S|W=w) = \log n$. $H_\infty(S|W) = \log n$.
 
-	\item Quantum stuff:
+	\item \textbf{Helper data schemes for specific PUF types: } \\
+	TODO
+
+	\item \textbf{Distance bounding principles (and fraud types): } \\
+	\textbf{Mafia fraud}: challenge is relayed to different location where a legit. device is tricked into giving a response, response is relayed back to verifier.
+	\textbf{Terrorist fraud}: legit. device cooperates with attacker, however auth secrets are not shared with the attacker.\\
+	(Light travels about 300m every $\mu s$). If a device repeatedly correctly respons to an \emph{unpredictable} challenge within time $\Delta t$, then the location where the response is computed cannot be further away than $x = c \Delta t/2$.
+	\item \textbf{Brands-chaum protocol: } \\
+
+	\item \textbf{Swiss knife protocol } \\
+
+	\item \textbf{Analog impl.: } \\
+
+	\item \textbf{Quantum stuff: } \\
 
 
 \end{itemize}
